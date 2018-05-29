@@ -11,13 +11,15 @@ class App extends Component {
     this.state =
     {
       searchResults: [],
-    playlistName: 'Playlist Name',
-    playlistTracks: []
+      playlistName: 'Playlist Name',
+      playlistTracks: [],
+      currentPreviewID: '',
     };
     this.addTrack = this.addTrack.bind(this)
     this.removeTrack = this.removeTrack.bind(this)
     this.updatePlaylistName = this.updatePlaylistName.bind(this)
     this.savePlaylist = this.savePlaylist.bind(this)
+    this.playTrack = this.playTrack.bind(this)
     this.search = this.search.bind(this)
   }
 
@@ -38,6 +40,12 @@ class App extends Component {
     this.setState({
       playlistTracks: playlistArray
     })
+  }
+
+  playTrack(track) {
+    this.setState({
+      currentPreviewID: track.id
+    });
   }
 
   updatePlaylistName(name) {
@@ -66,12 +74,16 @@ class App extends Component {
           <div className="App-playlist">
             <SearchResults
               searchResults={this.state.searchResults}
-              onAdd={this.addTrack}/>
+              onAdd={this.addTrack}
+              currentPreview={this.state.currentPreviewID}
+              onPlay={this.playTrack}/>
             <Playlist
               playlistName={this.state.playlistName}
               playlistTracks={this.state.playlistTracks}
               onRemove={this.removeTrack}
+              onPlay={this.playTrack}
               onNameChange={this.updatePlaylistName}
+              currentPreview={this.state.currentPreviewID}
               onSave={this.savePlaylist}/>
           </div>
         </div>

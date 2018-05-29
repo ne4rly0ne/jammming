@@ -48,13 +48,15 @@ const Spotify = {
                 throw new Error(`Spotify says '${response.statusText}'`);
               }).then(jsonResponse => {
                     if(jsonResponse.tracks) {
+                        console.log(jsonResponse.tracks)
                         return jsonResponse.tracks.items.map(track => {
                             return {
                                 id: track.id,
                                 name: track.name,
                                 artist: track.artists[0].name,
                                 album: track.album.name,
-                                URI: track.uri
+                                URI: track.uri,
+                                preview: track.preview_url
                             }
                         });
                     }
